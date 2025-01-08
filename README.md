@@ -1,4 +1,4 @@
-# Telegram Bot for OCR with Yandex cloud
+# Telegram Bot for OCR with Yandex Cloud
 
 This project is a Telegram bot that uses Yandex Cloud OCR API to recognize text from images sent by users.
 
