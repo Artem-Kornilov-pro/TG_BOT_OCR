@@ -1,13 +1,12 @@
 import telebot
 import base64
 import requests
-import json
 from PIL import Image
 from io import BytesIO
 import threading
 import os
+
 # Конфигурация
-#API_TOKEN_BOT = '7605936873:AAEExBBpW45ZzBI39S46neFpYAIs2MReC7M' 
 OAUTH_TOKEN = os.getenv("OAUTH_TOKEN")
 FOLDER_ID = os.getenv("FOLDER_ID")
 API_TOKEN_BOT = os.getenv("API_TOKEN_BOT")
@@ -65,6 +64,17 @@ def recognize_text(image_base64):
     except Exception as e:
         print(f"Ошибка при запросе к Yandex OCR API: {e}")
         return {}
+
+@bot.message_handler(commands=["start"])
+def start(message):
+    welcome_text = (
+        "👋 Привет, *{}*! \n\n"
+        "Я — 🤖 *бот для распознавания текста на изображениях.*\n\n"
+        "📸 Просто отправь мне фотографию с текстом, и я извлеку из неё всё, что смогу прочитать.\n"
+        "Поддерживаются любые изображения: документы, скриншоты, рукописный текст и многое другое.\n\n"
+        "Готов к работе! 🔍"
+    ).format(message.from_user.first_name or "пользователь")
+    bot.send_message(message.chat.id, welcome_text, parse_mode="Markdown")
 
 @bot.message_handler(content_types=['photo'])
 def handle_photo(message):
